@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chat Web App
 
-## Getting Started
+A real-time chat application built with Next.js, Tailwind CSS, MongoDB (Mongoose), and additional libraries.
 
-First, run the development server:
+## Roadmap
 
-```bash
+### Phase 1: Project Setup
+
+- [ ] Initialize Next.js project (`npx create-next-app@latest chat-web-app`)
+- [ ] Install dependencies:
+  - Tailwind CSS (`npm install -D tailwindcss postcss autoprefixer`)
+  - MongoDB & Mongoose (`npm install mongoose`)
+  - Authentication (e.g., NextAuth.js) (`npm install next-auth`)
+  - Real-time updates (e.g., Socket.io or Pusher) (`npm install socket.io` or `npm install @pusher/pusher`)
+- [ ] Configure Tailwind (`npx tailwindcss init -p`)
+
+### Phase 2: Database & API
+
+- [ ] Set up MongoDB connection with Mongoose
+- [ ] Define Mongoose schemas/models for users and messages
+- [ ] Create API routes for authentication, sending messages, and fetching chat history
+
+### Phase 3: Frontend Development
+
+- [ ] Design UI with Tailwind CSS
+- [ ] Implement chat interface with real-time message updates
+- [ ] Add authentication using NextAuth.js
+
+### Phase 4: Real-time Messaging
+
+- [ ] Integrate WebSockets (Socket.io or Pusher)
+- [ ] Display live messages in the chat window
+- [ ] Show online/offline status of users
+
+### Phase 5: Additional Features
+
+- [ ] Implement user profiles and avatars
+- [ ] Add message reactions and typing indicators
+- [ ] Enable file and image sharing
+
+### Phase 6: Deployment
+
+- [ ] Set up environment variables for production
+- [ ] Deploy to Vercel or another hosting provider
+- [ ] Connect to a remote MongoDB database (e.g., MongoDB Atlas)
+
+## Installation
+
+```sh
+# Clone the repository
+git clone https://github.com/your-username/chat-web-app.git
+cd chat-web-app
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## License
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
