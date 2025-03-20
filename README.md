@@ -6,17 +6,17 @@ A real-time chat application built with Next.js, Tailwind CSS, MongoDB (Mongoose
 
 ### Phase 1: Project Setup
 
-- [ ] Initialize Next.js project (`npx create-next-app@latest chat-web-app`)
-- [ ] Install dependencies:
+- [+] Initialize Next.js project (`npx create-next-app@latest chat-web-app`)
+- [+] Install dependencies:
   - Tailwind CSS (`npm install -D tailwindcss postcss autoprefixer`)
   - MongoDB & Mongoose (`npm install mongoose`)
   - Authentication (e.g., NextAuth.js) (`npm install next-auth`)
   - Real-time updates (e.g., Socket.io or Pusher) (`npm install socket.io` or `npm install @pusher/pusher`)
-- [ ] Configure Tailwind (`npx tailwindcss init -p`)
+- [+] Configure Tailwind (`npx tailwindcss init -p`)
 
 ### Phase 2: Database & API
 
-- [ ] Set up MongoDB connection with Mongoose
+- [+] Set up MongoDB connection with Mongoose
 - [ ] Define Mongoose schemas/models for users and messages
 - [ ] Create API routes for authentication, sending messages, and fetching chat history
 
