@@ -1,6 +1,13 @@
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-    </div>
+    <main className="flex flex-col w-full bg-main-background">
+      <div className="h-14 w-full">
+        <span>Друзья</span>
+        <button>в сети</button>
+        <button>все</button>
+        <button>Добавить в друзья</button>
+      </div>
+      <div className="h-full w-full">friend list</div>
+    </main>
   );
 }

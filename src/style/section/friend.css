@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* friend list section */
+.friend_button{
+    @apply flex flex-row items-center gap-3 w-full rounded-sm hover:bg-[#36373c] focus:bg-[#3f4047] cursor-pointer p-1
+}
+
+.friend_image_container{
+    @apply flex shrink-0 justify-end items-end h-8 w-8
+}
+
+.friend_img{
+    @apply rounded-full h-8 w-8
+}
+
+.friend_online_status{
+    @apply absolute rounded-full h-3 w-3
+}
+
+.friend_username{
+    @apply truncate text-[16px] w-full text-center
+}
+
+
+/* seacrh friend input field */
+.search_friend_container{
+    @apply flex justify-center items-center drop-shadow-sm border-b-1 border-b-neutral-800 w-full p-4
+}
+
+.search_friend_input{
+    @apply w-full p-2 h-7 text-white outline-0 rounded-md
+}
+
+/* friend section container */
+.friend_section_container{
+    @apply flex flex-col items-start max-w-2xs h-full gap-3 py-4 px-4
+}
