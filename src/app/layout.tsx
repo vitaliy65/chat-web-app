@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Channels from '@/components/sections/section.leftSideChannels/section.leftsideChannels';
-import Friends from '@/components/sections/section.friends/section.friends';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,11 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased font-sans`}>
-        <div className="flex flex-row w-full h-screen">
-          <Channels />
-          <Friends />
-          {children}
-        </div>
+        <div className="flex flex-row w-full h-screen">{children}</div>
       </body>
     </html>
   );

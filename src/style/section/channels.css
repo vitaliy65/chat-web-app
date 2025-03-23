@@ -5,7 +5,7 @@
 }
 
 .channel_button_img{
-    @apply flex justify-center items-center h-12 w-12 overflow-hidden
+    @apply flex justify-center items-center h-12 w-12 overflow-hidden cursor-pointer
 }
 
 .me_channel_underline{

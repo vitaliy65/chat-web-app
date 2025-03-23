@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+.login-container{
+    @apply flex items-center justify-center min-h-screen
+}
+
+.login-form{
+    @apply w-full max-w-md p-6 rounded-lg shadow-md drop-shadow-2xl
+}
+
+.login-title{
+    @apply text-2xl font-bold text-center mb-6
+}
+
+.input-field{
+    @apply mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-50
+}
+
+.input-label{
+    @apply block text-sm font-medium
+}
+
+.submit-button{
+    @apply w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+}
+
+.forget-password-link{
+    @apply text-sm text-blue-500 hover:underline
+}

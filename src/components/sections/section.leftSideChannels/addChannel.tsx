@@ -9,9 +9,10 @@ type ChannelsIconProps = {
   onClick: () => void;
 };
 
-export default function MeIcon({ isActive, onClick }: ChannelsIconProps) {
+export default function AddChannel({ isActive, onClick }: ChannelsIconProps) {
   return (
     <>
+      <hr className="me_channel_underline text-friends-background" />
       <motion.button
         initial={{ borderRadius: '32px' }}
         animate={{ borderRadius: isActive ? '12px' : '32px' }}
@@ -22,15 +23,13 @@ export default function MeIcon({ isActive, onClick }: ChannelsIconProps) {
       >
         <Image
           className="h-8 w-8"
-          src="/channels/me.png"
+          src="/channels/add.png"
           alt="channelsIcon"
           width={128}
           height={128}
           objectFit="cover"
         />
       </motion.button>
-
-      <hr className="me_channel_underline text-friends-background" />
     </>
   );
 }

@@ -6,7 +6,7 @@
 }
 
 .friend_image_container{
-    @apply flex shrink-0 justify-end items-end h-8 w-8
+    @apply flex shrink-0 justify-end items-end h-9 w-9
 }
 
 .friend_img{
@@ -24,7 +24,7 @@
 
 /* seacrh friend input field */
 .search_friend_container{
-    @apply flex justify-center items-center drop-shadow-sm border-b-1 border-b-neutral-800 w-full p-4
+    @apply flex justify-center items-center drop-shadow-sm border-b-1 border-b-neutral-800 w-full p-4 h-14
 }
 
 .search_friend_input{
@@ -33,5 +33,5 @@
 
 /* friend section container */
 .friend_section_container{
-    @apply flex flex-col items-start max-w-2xs h-full gap-3 py-4 px-4
+    @apply flex flex-col items-start h-full gap-3 py-4 px-4
 }
