@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const FriendChatSchema = new mongoose.Schema(
   {
+    img: { type: String, require: false },
     participants: {
       type: [
         {

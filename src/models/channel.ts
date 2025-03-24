@@ -8,9 +8,12 @@ const ChannelSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     }, // Владелец канала
+    img: { type: String, require: false },
+    description: { type: String, require: false },
     members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Участники
     textChats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TextChat' }], // Текстовые чаты
     voiceChats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'VoiceChat' }], // Голосовые чаты
+    roles: [{ type: String, require: false }],
   },
   { timestamps: true }
 );
