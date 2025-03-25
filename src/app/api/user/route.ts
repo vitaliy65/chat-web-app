@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     const token = generateToken({ id: newUser._id, role: newUser.role });
     await newUser.save();
     return createResponse(
-      { user: newUser.id, token: token },
+      { userId: newUser.id, token: 'token ' + token },
       STATUS_CODES.CREATED
     );
   } catch (error) {

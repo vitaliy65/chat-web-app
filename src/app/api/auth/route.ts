@@ -30,8 +30,12 @@ export async function POST(req: Request) {
       token,
       user: {
         id: user._id,
-        name: user.name,
         email: user.email,
+        username: user.username,
+        avatar: user.avatar,
+        friends: user.friends,
+        onlineStatus: user.onlineStatus,
+        channels: user.channels,
       },
     },
     { status: 201 }

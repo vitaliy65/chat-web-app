@@ -27,3 +27,7 @@
 .forget-password-link{
     @apply text-sm text-blue-500 hover:underline
 }
+
+.form-main-title{
+    @apply absolute text-2xl text-blue-50 pt-7 pl-14
+}
