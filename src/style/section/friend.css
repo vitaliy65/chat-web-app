@@ -18,7 +18,7 @@
 }
 
 .friend_username{
-    @apply truncate text-[16px] w-full text-center
+    @apply truncate text-[16px] w-full text-left
 }
 
 

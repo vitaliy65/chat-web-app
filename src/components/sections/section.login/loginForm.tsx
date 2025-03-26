@@ -6,6 +6,8 @@ import * as motion from 'motion/react-client';
 import InputField from '@/components/custom.field/inputField';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/app/_hooks/hooks';
+import { fetchAuthenticationStatus } from '@/app/_state/auth/authSlice';
 
 export default function LoginForm() {
   const [userData, setUserData] = React.useState({
@@ -14,6 +16,7 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -40,6 +43,7 @@ export default function LoginForm() {
 
       // Сохраняем данные в localStorage
       localStorage.setItem('user', JSON.stringify(localProps));
+      await dispatch(fetchAuthenticationStatus());
 
       router.push('/');
     } catch (err) {

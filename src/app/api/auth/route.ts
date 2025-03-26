@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     throw new Error('JWT_SECRET is not defined');
   }
 
-  const token = generateToken({ id: user._id, role: user.role });
+  const token = await generateToken({ id: user._id, role: user.role });
 
   return NextResponse.json(
     {

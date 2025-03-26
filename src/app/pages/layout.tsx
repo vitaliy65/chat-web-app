@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Providers } from '@/components/provider/provider';
 
 export const metadata: Metadata = {
-  title: 'Chat-web-app',
+  title: 'Chat-web-app pages',
   description: 'created by create-next-app',
 };
 
-export default function RootLayout({
+export default function PageLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -15,9 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased font-sans`}>
-        <div className="flex flex-row w-full h-screen">
-          <Providers>{children}</Providers>
-        </div>
+        <div className="flex flex-row w-full h-screen">{children}</div>
       </body>
     </html>
   );
