@@ -1,5 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import '@/style/section/login.css';
+import '@/style/section/friend.css';
+import '@/style/section/activeFriends.css';
+import '@/style/section/channels.css';
+import '@/style/section/register.css';
+import '@/style/bg.css';
+import '@/style/loading.css';
 import { Providers } from '@/components/provider/provider';
 
 export const metadata: Metadata = {

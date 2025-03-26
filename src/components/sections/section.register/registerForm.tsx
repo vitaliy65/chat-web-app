@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import '@/style/section/register.css';
 import * as motion from 'motion/react-client';
 import InputField from '@/components/custom.field/inputField';
@@ -18,6 +18,7 @@ export default function RegisterForm() {
 
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -26,6 +27,7 @@ export default function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       await axios.post('/api/user', userData);
 
       const user = await axios.post('/api/auth', userData);
@@ -50,6 +52,7 @@ export default function RegisterForm() {
       router.push('/');
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -92,9 +95,15 @@ export default function RegisterForm() {
           handleChange={handleChange}
           required
         />
-        <button type="submit" className="submit-button">
-          создать
-        </button>
+        {isLoading ? (
+          <div className="flex w-full justify-center items-center">
+            <div className="loading-spinner"></div>
+          </div>
+        ) : (
+          <button type="submit" className="submit-button">
+            создать
+          </button>
+        )}
         <div className="mt-4 text-center">
           <a href="/auth/login" className="forget-password-link">
             Уже есть аккаунт?

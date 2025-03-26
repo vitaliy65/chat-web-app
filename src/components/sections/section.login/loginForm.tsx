@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import '@/style/section/login.css';
 import * as motion from 'motion/react-client';
 import InputField from '@/components/custom.field/inputField';
@@ -14,6 +14,7 @@ export default function LoginForm() {
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ export default function LoginForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const user = await axios.post('/api/auth', userData);
 
       const localProps = {
@@ -48,6 +50,7 @@ export default function LoginForm() {
       router.push('/');
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -78,9 +81,15 @@ export default function LoginForm() {
           handleChange={handleChange}
           required
         />
-        <button type="submit" className="submit-button">
-          Войти
-        </button>
+        {isLoading ? (
+          <div className="flex w-full justify-center items-center">
+            <div className="loading-spinner"></div>
+          </div>
+        ) : (
+          <button type="submit" className="submit-button">
+            Войти
+          </button>
+        )}
         <div className="flex flex-col mt-4 text-center">
           <a href="#" className="forget-password-link">
             Забыли свой пароль?
