@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from './auth/authSlice';
 import friendSlice from './friend/friendSlice';
-import fillterFriendSlice from './filterFriend/filterFriendSlice';
+import filterFriendSlice from './filterFriend/filterFriendSlice';
+import friendRequestSlice from './friendRequest/friendRequestSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     friend: friendSlice,
-    filterFriend: fillterFriendSlice,
+    filterFriend: filterFriendSlice,
+    friendRequest: friendRequestSlice,
   },
 });
 

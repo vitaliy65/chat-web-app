@@ -47,10 +47,7 @@ export default function FillterFriends() {
       >
         Ожидание
       </FilterButton>
-      <AddFriendButton
-        isActive={activeIndex == 4}
-        onClick={() => action(4, setOpenAddFriendForm)}
-      >
+      <AddFriendButton onClick={() => action(4, setOpenAddFriendForm)}>
         Добавить в друзья
       </AddFriendButton>
     </div>

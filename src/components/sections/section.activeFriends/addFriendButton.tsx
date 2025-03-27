@@ -1,20 +1,22 @@
 import React, { ReactNode } from 'react';
 import '@/style/section/activeFriends.css';
+import { useAppSelector } from '@/app/_hooks/hooks';
 
 type ChannelsIconProps = {
-  isActive: boolean;
   onClick: () => void;
   children: ReactNode;
 };
 
 export default function AddFriendButton({
   children,
-  isActive,
   onClick,
 }: ChannelsIconProps) {
+  const active = useAppSelector(
+    (state) => state.filterFriend.action.openAddFriendForm
+  );
   return (
     <button
-      className={`add_friend_button ${isActive ? 'active-add' : 'not-active-add'}`}
+      className={`add_friend_button ${active ? 'active-add' : 'not-active-add'}`}
       onClick={onClick}
     >
       {children}

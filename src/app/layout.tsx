@@ -7,6 +7,7 @@ import '@/style/section/channels.css';
 import '@/style/section/register.css';
 import '@/style/bg.css';
 import '@/style/loading.css';
+import '@/style/button.css';
 import { Providers } from '@/components/provider/provider';
 import FetchUserInfo from '@/components/auth/fetchUserInfo';
 
