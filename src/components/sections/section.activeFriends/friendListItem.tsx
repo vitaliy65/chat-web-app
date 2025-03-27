@@ -1,12 +1,13 @@
 import Image from 'next/image';
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { FriendType } from '@/app/_state/friend/friendSlice';
 
-type FriendProps = {
-  img: string;
-  children: ReactNode;
-};
-
-export default function FriendListItem({ img, children }: FriendProps) {
+export default function FriendListItem({
+  username,
+  avatar,
+  onlineStatus,
+  //channels,
+}: FriendType) {
   return (
     <div className="list-item-upperline">
       <div className="friend-list-item-container hover:bg-friend-list-bacground">
@@ -14,22 +15,28 @@ export default function FriendListItem({ img, children }: FriendProps) {
           <div className="friend_image_container">
             <Image
               className="friend_img"
-              src={img}
+              src={avatar ? avatar : '/friend/user.png'}
               alt="friend img"
               width={128}
               height={128}
             />
             <Image
               className="friend_online_status"
-              src={'/user/active user.png'}
+              src={
+                onlineStatus
+                  ? '/user/active user.png'
+                  : '/user/not active user.png'
+              }
               alt=""
               width={128}
               height={128}
             />
           </div>
           <div>
-            <p>{children}</p>
-            <p className="online-status text-main-text">в сети</p>
+            <p>{username}</p>
+            <p className="online-status text-main-text">
+              {onlineStatus ? 'в сети' : 'не в сети'}
+            </p>
           </div>
         </div>
         <div className="flex flex-row gap-3">

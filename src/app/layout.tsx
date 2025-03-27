@@ -8,6 +8,7 @@ import '@/style/section/register.css';
 import '@/style/bg.css';
 import '@/style/loading.css';
 import { Providers } from '@/components/provider/provider';
+import FetchUserInfo from '@/components/auth/fetchUserInfo';
 
 export const metadata: Metadata = {
   title: 'Chat-web-app',
@@ -23,7 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased font-sans`}>
         <div className="flex flex-row w-full h-screen">
-          <Providers>{children}</Providers>
+          <Providers>
+            <FetchUserInfo>{children}</FetchUserInfo>
+          </Providers>
         </div>
       </body>
     </html>
