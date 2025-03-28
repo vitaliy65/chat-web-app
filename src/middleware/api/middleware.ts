@@ -51,17 +51,18 @@ export function handleError(error: Error | unknown) {
 
 export async function verifyUser(request: Request) {
   const verifedUser = await verifyToken(request);
-  if (!verifedUser)
-    return createResponse(
-      { error: ERROR_MESSAGES.UNAUTHORIZED_USER },
-      STATUS_CODES.FORBIDDEN
-    );
+  if (!verifedUser) throw new Error(ERROR_MESSAGES.UNAUTHORIZED_USER);
   return verifedUser.user;
 }
 
 export async function verifyAdmin(request: Request) {
   const user = await verifyAdminRole(request);
-  if (!user)
-    return createResponse('Admin role required', STATUS_CODES.FORBIDDEN);
+  if (!user) throw new Error('Admin role required');
   return user.user;
+}
+
+export function checkCurrentUser(userId: string, requestId: string) {
+  if (userId !== requestId) {
+    throw new Error('You cannot do that little rat');
+  }
 }

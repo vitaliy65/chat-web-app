@@ -7,15 +7,17 @@ import {
   createResponse,
   handleError,
   verifyUser,
+  checkCurrentUser,
 } from '@/middleware/api/middleware';
 
 export async function POST(request: Request) {
   try {
-    await verifyUser(request);
+    const currentUser = await verifyUser(request);
+    const { id, friendRequestId } = await request.json();
+
+    await checkCurrentUser(currentUser.id, id);
 
     await connectToMongoDB();
-
-    const { id, friendRequestId } = await request.json();
 
     // Find the authenticated user
     const authUser = await User.findById(id);

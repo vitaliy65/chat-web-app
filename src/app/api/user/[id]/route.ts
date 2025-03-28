@@ -6,6 +6,7 @@ import {
   createResponse,
   handleError,
   verifyUser,
+  checkCurrentUser,
 } from '@/middleware/api/middleware';
 
 export async function GET(
@@ -15,15 +16,11 @@ export async function GET(
   try {
     const currentUser = await verifyUser(request);
 
-    await connectToMongoDB();
     const { id } = await params;
 
-    if (currentUser.id !== id) {
-      return createResponse(
-        'You cannot get information of other person',
-        STATUS_CODES.FORBIDDEN
-      );
-    }
+    await checkCurrentUser(currentUser.id, id);
+
+    await connectToMongoDB();
 
     const user = await User.findById(id);
 

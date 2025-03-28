@@ -34,6 +34,7 @@ export async function POST(req: Request) {
     friends: user.friends,
     onlineStatus: user.onlineStatus,
     channels: user.channels,
+    role: user.role,
   });
 
   return createResponse(
@@ -47,6 +48,7 @@ export async function POST(req: Request) {
         friends: user.friends,
         onlineStatus: user.onlineStatus,
         channels: user.channels,
+        role: user.role,
       },
     },
     STATUS_CODES.CREATED

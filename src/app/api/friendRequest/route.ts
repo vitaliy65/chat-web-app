@@ -7,6 +7,7 @@ import {
   createResponse,
   handleError,
   verifyUser,
+  checkCurrentUser,
 } from '@/middleware/api/middleware';
 
 export async function POST(request: Request) {
@@ -14,12 +15,7 @@ export async function POST(request: Request) {
     const currentUser = await verifyUser(request);
     const data = await request.json();
 
-    if (currentUser.id !== data.id) {
-      return createResponse(
-        'You cannot fetch this information',
-        STATUS_CODES.FORBIDDEN
-      );
-    }
+    await checkCurrentUser(currentUser.id, data.id);
 
     await connectToMongoDB();
 

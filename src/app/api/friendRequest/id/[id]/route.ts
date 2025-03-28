@@ -6,6 +6,7 @@ import {
   createResponse,
   handleError,
   verifyUser,
+  checkCurrentUser,
 } from '@/middleware/api/middleware';
 
 type deleteParams = {
@@ -18,12 +19,7 @@ export async function DELETE({ request, params }: deleteParams) {
     const currentUser = await verifyUser(request);
     const { id } = await params;
 
-    if (currentUser.id !== id) {
-      return createResponse(
-        'You cannot delete this information',
-        STATUS_CODES.FORBIDDEN
-      );
-    }
+    await checkCurrentUser(currentUser.id, id);
 
     await connectToMongoDB();
 

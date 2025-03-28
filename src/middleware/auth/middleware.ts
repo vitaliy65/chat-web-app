@@ -28,7 +28,8 @@ export async function verifyToken(
 
 export async function verifyAdminRole(request: Request) {
   const decoded = await verifyToken(request);
-  if (!decoded || decoded.role !== 'admin') {
+  await console.log(decoded);
+  if (!decoded || decoded.user.role !== 'admin') {
     return null;
   }
 
@@ -43,6 +44,7 @@ export function generateToken(user: {
   friends: string[];
   onlineStatus: string;
   channels: string[];
+  role: string;
 }): string {
   const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {

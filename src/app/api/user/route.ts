@@ -9,6 +9,7 @@ import {
   verifyUser,
 } from '@/middleware/api/middleware';
 import { generateToken } from '@/middleware/auth/middleware';
+import { checkCurrentUser } from '@/middleware/api/middleware';
 
 export async function GET(request: Request) {
   try {
@@ -17,7 +18,19 @@ export async function GET(request: Request) {
     await connectToMongoDB();
 
     const users = await User.find();
-    return createResponse(users, STATUS_CODES.OK);
+
+    const responsUsers = users.map((u) => ({
+      id: u._id,
+      email: u.email,
+      username: u.username,
+      avatar: u.avatar,
+      friends: u.friends,
+      onlineStatus: u.onlineStatus,
+      channels: u.channels,
+      role: u.role,
+    }));
+
+    return createResponse(responsUsers, STATUS_CODES.OK);
   } catch (error) {
     return handleError(error);
   }
@@ -56,30 +69,24 @@ export async function POST(request: Request) {
     }
 
     const newUser = new User(data);
+    const responsUser = {
+      id: newUser._id,
+      email: newUser.email,
+      username: newUser.username,
+      avatar: newUser.avatar,
+      friends: newUser.friends,
+      onlineStatus: newUser.onlineStatus,
+      channels: newUser.channels,
+      role: newUser.role,
+    };
 
-    const token = generateToken({
-      id: user._id,
-      email: user.email,
-      username: user.username,
-      avatar: user.avatar,
-      friends: user.friends,
-      onlineStatus: user.onlineStatus,
-      channels: user.channels,
-    });
+    const token = generateToken(responsUser);
 
     await newUser.save();
     return createResponse(
       {
         token,
-        user: {
-          id: user._id,
-          email: user.email,
-          username: user.username,
-          avatar: user.avatar,
-          friends: user.friends,
-          onlineStatus: user.onlineStatus,
-          channels: user.channels,
-        },
+        user: responsUser,
       },
       STATUS_CODES.CREATED
     );
@@ -95,12 +102,7 @@ export async function DELETE(request: Request) {
 
     const { id } = await request.json();
 
-    if (currentUser.id !== id) {
-      return createResponse(
-        'You cannot delete information of other person',
-        STATUS_CODES.FORBIDDEN
-      );
-    }
+    await checkCurrentUser(currentUser.id, id);
 
     await connectToMongoDB();
 
@@ -129,12 +131,7 @@ export async function PATCH(request: Request) {
     const data = await request.json();
     const { id, ...updateData } = data;
 
-    if (currentUser.id !== id) {
-      return createResponse(
-        'You cannot patch information of other person',
-        STATUS_CODES.FORBIDDEN
-      );
-    }
+    await checkCurrentUser(currentUser.id, id);
 
     await connectToMongoDB();
 
