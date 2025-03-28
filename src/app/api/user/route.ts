@@ -38,8 +38,8 @@ export async function POST(request: Request) {
     }
 
     // Перевірка на існуючого користувача за email
-    const existingUser = await User.findOne({ email: data.email });
-    if (existingUser) {
+    const user = await User.findOne({ email: data.email });
+    if (user) {
       return createResponse(
         { error: ERROR_MESSAGES.USER_EXISTS },
         STATUS_CODES.CONFLICT
@@ -47,8 +47,8 @@ export async function POST(request: Request) {
     }
 
     // Перевірка на існуючого користувача за username
-    const existingUsername = await User.findOne({ username: data.username });
-    if (existingUsername) {
+    const username = await User.findOne({ username: data.username });
+    if (username) {
       return createResponse(
         { error: ERROR_MESSAGES.USERNAME_EXISTS },
         STATUS_CODES.CONFLICT
@@ -56,10 +56,31 @@ export async function POST(request: Request) {
     }
 
     const newUser = new User(data);
-    const token = generateToken({ id: newUser._id, role: newUser.role });
+
+    const token = generateToken({
+      id: user._id,
+      email: user.email,
+      username: user.username,
+      avatar: user.avatar,
+      friends: user.friends,
+      onlineStatus: user.onlineStatus,
+      channels: user.channels,
+    });
+
     await newUser.save();
     return createResponse(
-      { userId: newUser.id, token: 'token ' + token },
+      {
+        token,
+        user: {
+          id: user._id,
+          email: user.email,
+          username: user.username,
+          avatar: user.avatar,
+          friends: user.friends,
+          onlineStatus: user.onlineStatus,
+          channels: user.channels,
+        },
+      },
       STATUS_CODES.CREATED
     );
   } catch (error) {
@@ -69,12 +90,21 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    await verifyUser(request);
-
-    await connectToMongoDB();
+    // Проверяем пользователя и получаем его данные
+    const currentUser = await verifyUser(request);
 
     const { id } = await request.json();
 
+    if (currentUser.id !== id) {
+      return createResponse(
+        'You cannot delete information of other person',
+        STATUS_CODES.FORBIDDEN
+      );
+    }
+
+    await connectToMongoDB();
+
+    // Удаляем пользователя
     const result = await User.findByIdAndDelete(id);
     if (!result) {
       return createResponse(
@@ -94,12 +124,19 @@ export async function DELETE(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    await verifyUser(request);
-
-    await connectToMongoDB();
+    const currentUser = await verifyUser(request);
 
     const data = await request.json();
     const { id, ...updateData } = data;
+
+    if (currentUser.id !== id) {
+      return createResponse(
+        'You cannot patch information of other person',
+        STATUS_CODES.FORBIDDEN
+      );
+    }
+
+    await connectToMongoDB();
 
     // Перевірка на існуючого користувача за username
     const existingUsername = await User.findOne({

@@ -1,6 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { connectToMongoDB } from '@/db/mongodb';
+import {
+  STATUS_CODES,
+  ERROR_MESSAGES,
+  createResponse,
+  handleError,
+} from '@/middleware/api/middleware';
 
 export async function POST(req: NextRequest) {
   await connectToMongoDB();
@@ -8,14 +14,11 @@ export async function POST(req: NextRequest) {
   const secret = process.env.JWT_SECRET;
 
   if (!secret) {
-    return NextResponse.json(
-      { error: 'JWT_SECRET is not set' },
-      { status: 500 }
-    );
+    return handleError(ERROR_MESSAGES.JWT_NOT_DEFINED);
   }
 
   if (!data.token) {
-    return NextResponse.json({ error: 'Token is required' }, { status: 401 });
+    return handleError(ERROR_MESSAGES.JWT_TOKEN_REQUIRE);
   }
 
   try {
@@ -28,8 +31,8 @@ export async function POST(req: NextRequest) {
       user = decoded.user;
     }
 
-    return NextResponse.json({ valid: true, user }, { status: 200 });
+    return createResponse({ valid: true, user }, STATUS_CODES.OK);
   } catch {
-    return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    return handleError(ERROR_MESSAGES.JWT_INVALID);
   }
 }

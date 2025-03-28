@@ -6,9 +6,10 @@ export const STATUS_CODES = {
   OK: 200,
   CREATED: 201,
   BAD_REQUEST: 400,
-  CONFLICT: 409,
+  UNAUTHOURIZED: 401,
   FORBIDDEN: 403,
   NOT_FOUND: 404,
+  CONFLICT: 409,
   SERVER_ERROR: 500,
 };
 
@@ -25,6 +26,9 @@ export const ERROR_MESSAGES = {
   FRIEND_REQUEST_FETCHING: 'Error fetching friend request',
 
   SERVER_ERROR: 'Internal server error',
+  JWT_NOT_DEFINED: 'JWT_SECRET is not defined',
+  JWT_INVALID: 'Invalid token',
+  JWT_TOKEN_REQUIRE: 'Token is required',
 };
 
 // Utility function for generating JSON responses
@@ -52,10 +56,12 @@ export async function verifyUser(request: Request) {
       { error: ERROR_MESSAGES.UNAUTHORIZED_USER },
       STATUS_CODES.FORBIDDEN
     );
+  return verifedUser.user;
 }
 
 export async function verifyAdmin(request: Request) {
   const user = await verifyAdminRole(request);
   if (!user)
     return createResponse('Admin role required', STATUS_CODES.FORBIDDEN);
+  return user.user;
 }

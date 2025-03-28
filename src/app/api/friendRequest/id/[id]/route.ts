@@ -15,11 +15,18 @@ type deleteParams = {
 
 export async function DELETE({ request, params }: deleteParams) {
   try {
-    await verifyUser(request);
+    const currentUser = await verifyUser(request);
+    const { id } = await params;
+
+    if (currentUser.id !== id) {
+      return createResponse(
+        'You cannot delete this information',
+        STATUS_CODES.FORBIDDEN
+      );
+    }
 
     await connectToMongoDB();
 
-    const { id } = await params;
     const deletedRequest = await FriendRequest.findByIdAndDelete(id);
     if (!deletedRequest) {
       return createResponse(

@@ -13,10 +13,20 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    await verifyUser(request);
+    const currentUser = await verifyUser(request);
 
     await connectToMongoDB();
-    const user = await User.findById(params.id);
+    const { id } = await params;
+
+    if (currentUser.id !== id) {
+      return createResponse(
+        'You cannot get information of other person',
+        STATUS_CODES.FORBIDDEN
+      );
+    }
+
+    const user = await User.findById(id);
+
     if (!user) {
       return createResponse(
         { error: ERROR_MESSAGES.USER_NOT_FOUND },
@@ -36,10 +46,19 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    await verifyUser(request);
+    const currentUser = await verifyUser(request);
 
     await connectToMongoDB();
-    const user = await User.findByIdAndDelete(params.id);
+    const { id } = await params;
+
+    if (currentUser.id !== id) {
+      return createResponse(
+        'You cannot delete account of other person',
+        STATUS_CODES.FORBIDDEN
+      );
+    }
+
+    const user = await User.findByIdAndDelete(id);
     if (!user) {
       return createResponse(
         { error: ERROR_MESSAGES.USER_NOT_FOUND },

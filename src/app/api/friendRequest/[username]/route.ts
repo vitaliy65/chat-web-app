@@ -14,12 +14,19 @@ export async function POST(
   { params }: { params: { username: string } }
 ) {
   try {
-    await verifyUser(request);
-
-    await connectToMongoDB();
+    const currentUser = await verifyUser(request);
     const body = await request.json();
     const { username } = await params;
     const senderId = body.senderId;
+
+    if (currentUser.id !== senderId) {
+      return createResponse(
+        'You cannot fetch information this information',
+        STATUS_CODES.FORBIDDEN
+      );
+    }
+
+    await connectToMongoDB();
 
     // Найти пользователя по username
     const receiver = await User.findOne({ username: username });

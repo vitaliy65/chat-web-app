@@ -31,6 +31,7 @@ export async function verifyAdminRole(request: Request) {
   if (!decoded || decoded.role !== 'admin') {
     return null;
   }
+
   return decoded;
 }
 

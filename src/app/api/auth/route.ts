@@ -1,7 +1,12 @@
-import { NextResponse } from 'next/server';
 import User from '@/models/User';
 import { connectToMongoDB } from '@/db/mongodb';
 import { generateToken } from '@/middleware/auth/middleware';
+import {
+  STATUS_CODES,
+  ERROR_MESSAGES,
+  createResponse,
+  handleError,
+} from '@/middleware/api/middleware';
 
 export async function POST(req: Request) {
   await connectToMongoDB();
@@ -9,18 +14,16 @@ export async function POST(req: Request) {
 
   const user = await User.findOne({ email: data.email });
   if (!user || !(await user.matchPassword(data.password))) {
-    return NextResponse.json(
-      {
-        message: 'Invalid email or password',
-      },
-      { status: 401 }
+    return createResponse(
+      'Invalid email or password',
+      STATUS_CODES.UNAUTHOURIZED
     );
   }
 
   const jwtSecret = process.env.JWT_SECRET;
 
   if (!jwtSecret) {
-    throw new Error('JWT_SECRET is not defined');
+    handleError(ERROR_MESSAGES.JWT_NOT_DEFINED);
   }
 
   const token = await generateToken({
@@ -33,7 +36,7 @@ export async function POST(req: Request) {
     channels: user.channels,
   });
 
-  return NextResponse.json(
+  return createResponse(
     {
       token,
       user: {
@@ -46,6 +49,6 @@ export async function POST(req: Request) {
         channels: user.channels,
       },
     },
-    { status: 201 }
+    STATUS_CODES.CREATED
   );
 }

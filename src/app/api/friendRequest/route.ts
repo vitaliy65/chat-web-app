@@ -11,12 +11,17 @@ import {
 
 export async function POST(request: Request) {
   try {
-    await verifyUser(request);
+    const currentUser = await verifyUser(request);
+    const data = await request.json();
+
+    if (currentUser.id !== data.id) {
+      return createResponse(
+        'You cannot fetch this information',
+        STATUS_CODES.FORBIDDEN
+      );
+    }
 
     await connectToMongoDB();
-
-    // Проверка на наличие тела запроса
-    const data = await request.json();
 
     const authUser = await User.findById(data.id);
     if (!authUser) {
