@@ -34,14 +34,22 @@ export async function verifyAdminRole(request: Request) {
   return decoded;
 }
 
-export function generateToken(user: { id: string; role: string }): string {
+export function generateToken(user: {
+  id: string;
+  email: string;
+  username: string;
+  avatar: string;
+  friends: string[];
+  onlineStatus: string;
+  channels: string[];
+}): string {
   const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {
     throw new Error('JWT_SECRET is not defined');
   }
 
   const token = jwt.sign(
-    { id: user.id, role: user.role },
+    { user: user },
     jwtSecret,
     { expiresIn: '24h' } // valid for 24 hours
   );

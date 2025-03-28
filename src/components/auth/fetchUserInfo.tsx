@@ -17,7 +17,7 @@ export default function FetchUserInfo({ children }: { children: ReactNode }) {
       try {
         const res = await dispatch(fetchAuthenticationStatus());
 
-        if (!res.payload) {
+        if (!res.payload.valid) {
           router.push('/auth/login');
         }
       } catch (error) {
@@ -47,6 +47,10 @@ export default function FetchUserInfo({ children }: { children: ReactNode }) {
 
     setLoading(false);
   }, []);
+
+  // useEffect(() => {
+  //   console.log(user);
+  // }, []);
 
   return loading ? (
     <main className="flex justify-center items-center w-full h-full bg-main-background">

@@ -1,13 +1,31 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { APP_URL } from '@/utils/constants';
 
 type AuthState = {
-  isAuthenticated: boolean;
+  valid: boolean;
+  user: {
+    id: string;
+    email: string;
+    username: string;
+    avatar: string;
+    friends: string[];
+    onlineStatus: string;
+    channels: string[];
+  };
 };
 
 const initialState: AuthState = {
-  isAuthenticated: false,
+  valid: false,
+  user: {
+    id: '',
+    email: '',
+    username: '',
+    avatar: '',
+    friends: [],
+    onlineStatus: '',
+    channels: [],
+  },
 };
 
 const authSlice = createSlice({
@@ -15,14 +33,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchAuthenticationStatus.fulfilled,
-      (state, action: PayloadAction<boolean>) => {
-        state.isAuthenticated = action.payload;
-      }
-    );
+    builder.addCase(fetchAuthenticationStatus.fulfilled, (state, action) => {
+      Object.assign(state, action.payload);
+    });
     builder.addCase(fetchAuthenticationStatus.rejected, (state) => {
-      state.isAuthenticated = false;
+      state.valid = false;
     });
   },
 });
@@ -36,9 +51,9 @@ export const fetchAuthenticationStatus = createAsyncThunk(
         const response = await axios.post(`${APP_URL}/api/auth/me`, {
           token: storedUser.token,
         });
-        return response.data.valid;
+
+        return response.data;
       }
-      return false;
     } catch {
       return rejectWithValue(false);
     }

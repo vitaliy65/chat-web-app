@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 .btn{
-    @apply px-4 py-2 rounded;
+    @apply px-4 py-2 rounded mr-4 w-28 cursor-pointer;
 }
 
 .btn-primary{
-    @apply bg-blue-500 text-white;
+    @apply bg-blue-500 text-white hover:bg-blue-600 ;
 }
 
 .btn-secondary{
-    @apply bg-gray-500 text-white;
+    @apply bg-gray-500 text-white hover:bg-gray-600;
 }

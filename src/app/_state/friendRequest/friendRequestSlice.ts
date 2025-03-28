@@ -3,11 +3,15 @@ import axios from 'axios';
 import { APP_URL } from '@/utils/constants';
 
 type FriendState = {
-  senderNames: string[];
+  request: {
+    senderName: string;
+    requestId: string;
+    status: 'pending' | 'accepted' | 'declined';
+  }[];
 };
 
 const initialState: FriendState = {
-  senderNames: [],
+  request: [],
 };
 
 const friendRequestSlice = createSlice({
@@ -17,12 +21,21 @@ const friendRequestSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchFriendRequests.fulfilled,
-      (state, action: PayloadAction<string[]>) => {
-        state.senderNames = action.payload;
+      (
+        state,
+        action: PayloadAction<
+          {
+            senderName: string;
+            requestId: string;
+            status: 'pending' | 'accepted' | 'declined';
+          }[]
+        >
+      ) => {
+        state.request = action.payload; // Ensure payload matches the expected structure
       }
     );
     builder.addCase(fetchFriendRequests.rejected, (state) => {
-      state.senderNames = [];
+      state.request = [];
     });
   },
 });
@@ -43,7 +56,7 @@ export const fetchFriendRequests = createAsyncThunk(
           },
         }
       );
-      await console.log(response.data);
+
       return response.data;
     } catch (error) {
       console.error(error); // Log the error for debugging

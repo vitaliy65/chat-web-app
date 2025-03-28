@@ -36,6 +36,7 @@ export async function POST(request: Request) {
         return {
           senderName: sender?.username || 'Unknown',
           requestId: request._id,
+          status: request.status,
         };
       })
     );

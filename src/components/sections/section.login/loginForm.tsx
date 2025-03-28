@@ -5,7 +5,6 @@ import '@/style/section/login.css';
 import * as motion from 'motion/react-client';
 import InputField from '@/components/custom.field/inputField';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/app/_hooks/hooks';
 import { fetchAuthenticationStatus } from '@/app/_state/auth/authSlice';
 
@@ -16,7 +15,6 @@ export default function LoginForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,26 +26,26 @@ export default function LoginForm() {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const user = await axios.post('/api/auth', userData);
+      const res = await axios.post('/api/auth', userData);
 
       const localProps = {
         user: {
-          id: user.data.user.id,
-          email: user.data.user.email,
-          username: user.data.user.username,
-          avatar: user.data.user.avatar,
-          friends: user.data.user.friends,
-          onlineStatus: user.data.user.onlineStatus,
-          channels: user.data.user.channels,
+          id: res.data.user.id,
+          email: res.data.user.email,
+          username: res.data.user.username,
+          avatar: res.data.user.avatar,
+          friends: res.data.user.friends,
+          onlineStatus: res.data.user.onlineStatus,
+          channels: res.data.user.channels,
         },
-        token: user.data.token,
+        token: res.data.token,
       };
 
       // Сохраняем данные в localStorage
-      localStorage.setItem('user', JSON.stringify(localProps));
+      await localStorage.setItem('user', JSON.stringify(localProps));
       await dispatch(fetchAuthenticationStatus());
 
-      router.push('/');
+      window.location.href = '/';
     } catch (err) {
       console.log(err);
       setIsLoading(false);

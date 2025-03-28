@@ -10,7 +10,7 @@ export default function FriendListItem({
 }: FriendType) {
   return (
     <div className="list-item-upperline">
-      <div className="friend-list-item-container hover:bg-friend-list-bacground">
+      <div className="friend-list-item-container hover:bg-friend-list-background">
         <div className="row-center">
           <div className="friend_image_container">
             <Image

@@ -20,7 +20,15 @@ export async function POST(req: NextRequest) {
 
   try {
     const decoded = jwt.verify(data.token, secret);
-    return NextResponse.json({ valid: true, user: decoded }, { status: 200 });
+    let user;
+
+    if (typeof decoded === 'string') {
+      user = JSON.parse(decoded).user;
+    } else {
+      user = decoded.user;
+    }
+
+    return NextResponse.json({ valid: true, user }, { status: 200 });
   } catch {
     return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
   }

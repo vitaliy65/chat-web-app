@@ -7,7 +7,7 @@
   --channelsBackground: #1e1f22;
   --friendsBackground: #2b2d31;
   --mainBackground: #313338;
-  --friendListBacground: #3b3c41;
+  --friendListBackground: #3b3c41;
 }
 
 @theme inline {
@@ -18,7 +18,7 @@
   --color-friends-background: var(--friendsBackground);
   --color-main-background: var(--mainBackground);
   --color-main-text: var(--mainText);
-  --color-friend-list-bacground: var(--friendListBacground);
+  --color-friend-list-background: var(--friendListBackground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

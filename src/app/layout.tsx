@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import '@/style/form/addFriendForm.css';
 import '@/style/section/login.css';
 import '@/style/section/friend.css';
 import '@/style/section/activeFriends.css';

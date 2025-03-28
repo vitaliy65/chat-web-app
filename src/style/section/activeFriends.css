@@ -36,7 +36,7 @@
 
 /* friend list item additionals classes */
 .list-item-upperline{
-    @apply border-t-1 border-solid border-[#3d3e41]
+    @apply border-t-1 w-full border-solid border-[#3d3e41]
 }
 
 .online-status{
@@ -61,5 +61,5 @@
 
 
 .row-center{
-    @apply flex flex-row items-center gap-4
+    @apply flex flex-row items-center gap-4 justify-between
 }
