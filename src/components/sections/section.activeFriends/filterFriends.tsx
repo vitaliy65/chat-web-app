@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import '@/style/section/activeFriends.css';
-import FilterButton from './filterButton';
-import AddFriendButton from './addFriendButton';
+import FilterButton from './button/button.filter';
+import AddFriendButton from './button/button.addFriend';
 import { useAppDispatch } from '@/app/_hooks/hooks';
 import { AppDispatch } from '@/app/_state/store';
 import {

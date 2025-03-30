@@ -32,6 +32,15 @@ const friendSlice = createSlice({
     builder.addCase(fetchFriends.rejected, (state) => {
       state.friends = [];
     });
+    builder.addCase(
+      deleteFriend.fulfilled,
+      (state, action: PayloadAction<FriendType[]>) => {
+        state.friends = action.payload;
+      }
+    );
+    builder.addCase(deleteFriend.rejected, (state) => {
+      state.friends = [];
+    });
   },
 });
 
@@ -39,31 +48,15 @@ export const fetchFriends = createAsyncThunk(
   'friend/fetchFriends',
   async (_, { rejectWithValue }) => {
     try {
-      const storedUserString = localStorage.getItem('user');
-      if (!storedUserString) {
-        return rejectWithValue([]); // Return empty array if no user is stored
-      }
-
-      const storedUser = JSON.parse(storedUserString);
-      if (
-        !storedUser ||
-        !storedUser.user ||
-        !Array.isArray(storedUser.user.friends)
-      ) {
-        return rejectWithValue([]); // Validate structure of storedUser
-      }
+      const storedUser = JSON.parse(localStorage.getItem('user') || '');
+      if (!storedUser) return rejectWithValue([]); // Validate structure of storedUser
 
       const friendIds = storedUser.user.friends;
-
-      if (friendIds.length === 0) {
-        return []; // Return empty array if no friends are present
-      }
-
-      const link = `${APP_URL}/api/friend/${friendIds.join('/')}`;
+      if (friendIds.length === 0) rejectWithValue([]);
 
       // Fetch data for each friend
       const friendData: FriendType[] = await axios
-        .get(link, {
+        .get(`${APP_URL}/api/friend`, {
           headers: {
             Authorization: `Bearer ${storedUser.token}`,
           },
@@ -74,11 +67,43 @@ export const fetchFriends = createAsyncThunk(
           return [];
         });
 
-      // Filter out null values
-      return friendData.filter((friend: FriendType) => friend !== null);
+      return friendData;
     } catch (error) {
       console.error(error); // Log the error for debugging
       return rejectWithValue([]); // Return empty array on error
+    }
+  }
+);
+
+export const deleteFriend = createAsyncThunk(
+  'friend/deleteFriend',
+  async (friendId: string, { rejectWithValue }) => {
+    try {
+      const storedUser = await JSON.parse(localStorage.getItem('user') || '');
+      if (!storedUser) return rejectWithValue([]); // Validate structure of storedUser
+
+      await axios.delete(`${APP_URL}/api/friend/${friendId}`, {
+        headers: {
+          Authorization: `Bearer ${storedUser.token}`,
+        },
+      });
+
+      const friendData: FriendType[] = await axios
+        .get(`${APP_URL}/api/friend`, {
+          headers: {
+            Authorization: `Bearer ${storedUser.token}`,
+          },
+        })
+        .then((res) => res.data)
+        .catch((err) => {
+          console.error(err);
+          return [];
+        });
+
+      return friendData;
+    } catch (error: Error | unknown) {
+      console.error(error instanceof Error ? error.message : String(error));
+      return rejectWithValue('Error deleting friend');
     }
   }
 );

@@ -5,30 +5,28 @@ import {
   ERROR_MESSAGES,
   createResponse,
   handleError,
-  verifyAdmin,
   verifyUser,
 } from '@/middleware/api/middleware';
 import { generateToken } from '@/middleware/auth/middleware';
-import { checkCurrentUser } from '@/middleware/api/middleware';
 
 export async function GET(request: Request) {
   try {
-    await verifyAdmin(request);
+    const user = await verifyUser(request);
 
     await connectToMongoDB();
 
-    const users = await User.find();
+    const currentUser = await User.findOne({ _id: user.id });
 
-    const responsUsers = users.map((u) => ({
-      id: u._id,
-      email: u.email,
-      username: u.username,
-      avatar: u.avatar,
-      friends: u.friends,
-      onlineStatus: u.onlineStatus,
-      channels: u.channels,
-      role: u.role,
-    }));
+    const responsUsers = {
+      id: currentUser.id,
+      email: currentUser.email,
+      username: currentUser.username,
+      avatar: currentUser.avatar,
+      friends: currentUser.friends,
+      onlineStatus: currentUser.onlineStatus,
+      channels: currentUser.channels,
+      role: currentUser.role,
+    };
 
     return createResponse(responsUsers, STATUS_CODES.OK);
   } catch (error) {
@@ -100,14 +98,10 @@ export async function DELETE(request: Request) {
     // Проверяем пользователя и получаем его данные
     const currentUser = await verifyUser(request);
 
-    const { id } = await request.json();
-
-    await checkCurrentUser(currentUser.id, id);
-
     await connectToMongoDB();
 
     // Удаляем пользователя
-    const result = await User.findByIdAndDelete(id);
+    const result = await User.findByIdAndDelete(currentUser.id);
     if (!result) {
       return createResponse(
         { error: 'User not found' },
@@ -131,8 +125,6 @@ export async function PATCH(request: Request) {
     const data = await request.json();
     const { id, ...updateData } = data;
 
-    await checkCurrentUser(currentUser.id, id);
-
     await connectToMongoDB();
 
     // Перевірка на існуючого користувача за username
@@ -148,7 +140,7 @@ export async function PATCH(request: Request) {
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-      id,
+      currentUser.id,
       { $set: updateData },
       { new: true }
     );

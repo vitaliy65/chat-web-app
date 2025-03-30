@@ -1,4 +1,5 @@
 import FriendRequest from '@/models/FriendRequest';
+import User from '@/models/User';
 import { connectToMongoDB } from '@/db/mongodb';
 import {
   STATUS_CODES,
@@ -6,31 +7,35 @@ import {
   createResponse,
   handleError,
   verifyUser,
-  checkCurrentUser,
 } from '@/middleware/api/middleware';
 
 type deleteParams = {
   params: { id: string };
-  request: Request;
 };
 
-export async function DELETE({ request, params }: deleteParams) {
+export async function DELETE(request: Request, { params }: deleteParams) {
   try {
     const currentUser = await verifyUser(request);
     const { id } = await params;
 
-    await checkCurrentUser(currentUser.id, id);
-
     await connectToMongoDB();
 
-    const deletedRequest = await FriendRequest.findByIdAndDelete(id);
-    if (!deletedRequest) {
+    const existingRequest = await FriendRequest.findOne({
+      _id: id,
+      receiverId: currentUser.id,
+    });
+
+    if (!existingRequest) {
       return createResponse(
         { error: ERROR_MESSAGES.FRIEND_REQUEST_NOT_FOUND },
-        STATUS_CODES.FORBIDDEN
+        STATUS_CODES.NOT_FOUND
       );
     }
-    return createResponse('Friend request deleted', STATUS_CODES.OK);
+
+    // Delete the existing friend request
+    await FriendRequest.deleteOne({ _id: existingRequest._id });
+
+    return createResponse(id, STATUS_CODES.OK);
   } catch (error) {
     return handleError(error);
   }

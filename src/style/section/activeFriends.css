@@ -6,7 +6,7 @@
 }
 
 .friend-list-item-container{
-    @apply flex flex-row items-center justify-between w-full gap-3 text-amber-50 rounded-md p-3 text-left cursor-pointer
+    @apply flex flex-row items-center justify-between w-full gap-3 text-amber-50 rounded-md p-3 text-left 
 }
 
 .friend-list-container{
@@ -36,7 +36,7 @@
 
 /* friend list item additionals classes */
 .list-item-upperline{
-    @apply border-t-1 w-full border-solid border-[#3d3e41]
+    @apply border-t-1 max-w-5xl border-solid border-[#3d3e41]
 }
 
 .online-status{

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyToken, verifyAdminRole } from '@/middleware/auth/middleware';
+import { AuthUser } from '@/utils/constants';
 
 // Constants for status codes and error messages
 export const STATUS_CODES = {
@@ -20,10 +21,16 @@ export const ERROR_MESSAGES = {
   USER_NOT_FOUND: 'User not found',
   USER_FETCHING: 'Error fetching user',
   UNAUTHORIZED_USER: 'Unauthorized user',
+
   //friend request
   FRIEND_REQUEST_EXISTS: 'Friend request already exists',
   FRIEND_REQUEST_NOT_FOUND: 'Friend request not found',
   FRIEND_REQUEST_FETCHING: 'Error fetching friend request',
+
+  //friend
+  FRIEND_EXISTS: 'A user with this email already exists',
+  FRIEND_NOT_FOUND: 'User not found',
+  FRIEND_FETCHING: 'Error fetching user',
 
   SERVER_ERROR: 'Internal server error',
   JWT_NOT_DEFINED: 'JWT_SECRET is not defined',
@@ -49,13 +56,13 @@ export function handleError(error: Error | unknown) {
   );
 }
 
-export async function verifyUser(request: Request) {
+export async function verifyUser(request: Request): Promise<AuthUser> {
   const verifedUser = await verifyToken(request);
   if (!verifedUser) throw new Error(ERROR_MESSAGES.UNAUTHORIZED_USER);
   return verifedUser.user;
 }
 
-export async function verifyAdmin(request: Request) {
+export async function verifyAdmin(request: Request): Promise<AuthUser> {
   const user = await verifyAdminRole(request);
   if (!user) throw new Error('Admin role required');
   return user.user;

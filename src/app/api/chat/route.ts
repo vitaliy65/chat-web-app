@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import Chat from '@/models/Chat';
 import { connectToMongoDB } from '@/db/mongodb';
-import { verifyAdminRole } from '@/middleware/auth/middleware.ts';
+import { verifyAdmin } from '@/middleware/api/middleware';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const user = await verifyAdminRole(request);
+    const user = await verifyAdmin(request);
     if (!user) return;
 
     await connectToMongoDB();
@@ -22,7 +22,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const user = await verifyAdminRole(request);
+    const user = await verifyAdmin(request);
     if (!user) return;
 
     await connectToMongoDB();
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const user = await verifyAdminRole(request);
+    const user = await verifyAdmin(request);
     if (!user) return;
 
     await connectToMongoDB();
@@ -60,7 +60,7 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const user = await verifyAdminRole(request);
+    const user = await verifyAdmin(request);
     if (!user) return;
 
     await connectToMongoDB();

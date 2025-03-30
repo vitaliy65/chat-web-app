@@ -10,16 +10,13 @@ import {
   checkCurrentUser,
 } from '@/middleware/api/middleware';
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   try {
     const currentUser = await verifyUser(request);
-    const data = await request.json();
-
-    await checkCurrentUser(currentUser.id, data.id);
 
     await connectToMongoDB();
 
-    const authUser = await User.findById(data.id);
+    const authUser = await User.findById(currentUser.id);
     if (!authUser) {
       return createResponse(
         { error: ERROR_MESSAGES.USER_NOT_FOUND },

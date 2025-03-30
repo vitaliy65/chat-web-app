@@ -5,7 +5,6 @@ import '@/style/section/register.css';
 import * as motion from 'motion/react-client';
 import InputField from '@/components/custom.field/inputField';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/app/_hooks/hooks';
 import { fetchAuthenticationStatus } from '@/app/_state/auth/authSlice';
 
@@ -16,7 +15,6 @@ export default function RegisterForm() {
     password: '',
   });
 
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,7 +47,7 @@ export default function RegisterForm() {
       localStorage.setItem('user', JSON.stringify(localProps));
       await dispatch(fetchAuthenticationStatus());
 
-      router.push('/');
+      window.location.href = '/';
     } catch (err) {
       console.log(err);
       setIsLoading(false);

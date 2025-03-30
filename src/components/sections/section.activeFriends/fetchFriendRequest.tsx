@@ -1,8 +1,12 @@
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/hooks';
 import React from 'react';
-import axios from 'axios';
-import { APP_URL } from '@/utils/constants';
-import { fetchFriendRequests } from '@/app/_state/friendRequest/friendRequestSlice';
+import {
+  fetchFriendRequests,
+  acceptFriendRequest,
+  denyFriendRequest,
+} from '@/app/_state/friendRequest/friendRequestSlice';
+import { updateUserInfo } from '@/app/_state/user/userSlice';
+import { fetchFriends } from '@/app/_state/friend/friendSlice';
 
 type FriendRequest = {
   requestId: string;
@@ -16,35 +20,20 @@ export default function FetchFriendRequest() {
   );
   const dispatch = useAppDispatch();
 
-  async function acceptFriendRequest(friendRequestId: string) {
+  async function _acceptFriendRequest(friendRequestId: string) {
     try {
-      const data = JSON.parse(localStorage.getItem('user') || '{}');
-      await axios.post(
-        `${APP_URL}/api/acceptFriendRequest`,
-        {
-          id: data.user.id,
-          friendRequestId: friendRequestId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        }
-      );
+      await dispatch(acceptFriendRequest(friendRequestId));
       await dispatch(fetchFriendRequests());
+      await dispatch(fetchFriends());
+      await dispatch(updateUserInfo());
     } catch {
       console.log('Error accepting friend request');
     }
   }
 
-  async function rejectFriendRequest(friendRequestId: string) {
+  async function _rejectFriendRequest(friendRequestId: string) {
     try {
-      const data = JSON.parse(localStorage.getItem('user') || '{}');
-      await axios.post(`${APP_URL}/api/friendRequestId/id/${friendRequestId}`, {
-        headers: {
-          Authorization: `Bearer ${data.token}`,
-        },
-      });
+      await dispatch(denyFriendRequest(friendRequestId));
       await dispatch(fetchFriendRequests());
     } catch {
       console.log('Error rejecting friend request');
@@ -60,13 +49,13 @@ export default function FetchFriendRequest() {
           .map((request) => (
             <div key={request.requestId} className="flex flex-col w-full">
               <div className="list-item-upperline">
-                <div className="friend-list-item-container border mb-2 hover:bg-friend-list-background">
+                <div className="friend-list-item-container border border-stone-600 mb-2 hover:bg-friend-list-background">
                   <p className="friend_username">@{request.senderName}</p>
                   <div className="flex">
                     <button
                       className="btn btn-primary"
                       onClick={() => {
-                        acceptFriendRequest(request.requestId);
+                        _acceptFriendRequest(request.requestId);
                       }}
                     >
                       Принять
@@ -74,7 +63,7 @@ export default function FetchFriendRequest() {
                     <button
                       className="btn btn-secondary"
                       onClick={() => {
-                        rejectFriendRequest(request.requestId);
+                        _rejectFriendRequest(request.requestId);
                       }}
                     >
                       Отклонить

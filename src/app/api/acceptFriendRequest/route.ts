@@ -7,20 +7,18 @@ import {
   createResponse,
   handleError,
   verifyUser,
-  checkCurrentUser,
 } from '@/middleware/api/middleware';
+import { generateToken } from '@/middleware/auth/middleware';
 
 export async function POST(request: Request) {
   try {
     const currentUser = await verifyUser(request);
-    const { id, friendRequestId } = await request.json();
-
-    await checkCurrentUser(currentUser.id, id);
+    const { friendRequestId } = await request.json();
 
     await connectToMongoDB();
 
     // Find the authenticated user
-    const authUser = await User.findById(id);
+    const authUser = await User.findById(currentUser.id);
     if (!authUser) {
       return createResponse(
         { error: ERROR_MESSAGES.USER_NOT_FOUND },
@@ -72,8 +70,31 @@ export async function POST(request: Request) {
     await authUser.save();
     await sender.save();
 
+    const token = await generateToken({
+      id: authUser._id,
+      email: authUser.email,
+      username: authUser.username,
+      avatar: authUser.avatar,
+      friends: authUser.friends,
+      onlineStatus: authUser.onlineStatus,
+      channels: authUser.channels,
+      role: authUser.role,
+    });
+
     return createResponse(
-      { message: 'Friend request accepted successfully' },
+      {
+        token,
+        user: {
+          id: authUser._id,
+          email: authUser.email,
+          username: authUser.username,
+          avatar: authUser.avatar,
+          friends: authUser.friends,
+          onlineStatus: authUser.onlineStatus,
+          channels: authUser.channels,
+          role: authUser.role,
+        },
+      },
       STATUS_CODES.OK
     );
   } catch (error) {

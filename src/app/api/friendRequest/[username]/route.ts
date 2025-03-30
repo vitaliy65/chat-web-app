@@ -16,11 +16,8 @@ export async function POST(
 ) {
   try {
     const currentUser = await verifyUser(request);
-    const body = await request.json();
     const { username } = await params;
-    const senderId = body.senderId;
-
-    await checkCurrentUser(currentUser.id, senderId);
+    const senderId = currentUser.id;
 
     await connectToMongoDB();
 

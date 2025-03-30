@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { setOpenAddFriendForm } from '@/app/_state/filterFriend/filterFriendSlice';
 import { useAppDispatch } from '@/app/_hooks/hooks';
@@ -11,21 +11,12 @@ export default function AddFriendForm() {
   const [friendName, setFriendName] = React.useState('');
   const [showErrorModal, setShowErrorModal] = React.useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowErrorModal(false);
-    }, 2000);
-
-    return clearTimeout(timer);
-  }, [showErrorModal]);
-
   const closeForm = () => {
     dispatch(setOpenAddFriendForm());
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setShowErrorModal(true);
     try {
       const data = JSON.parse(localStorage.getItem('user') || '{}');
       const res = await axios.post(
