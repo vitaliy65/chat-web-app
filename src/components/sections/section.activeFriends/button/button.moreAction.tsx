@@ -1,5 +1,6 @@
+'use client';
 import { useAppSelector } from '@/app/_hooks/hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 interface moreActionProps {
   onClick: () => void;

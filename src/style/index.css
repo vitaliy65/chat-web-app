@@ -1,0 +1,10 @@
+@import './form/addFriendForm.css';
+@import './section/login.css';
+@import './section/friend.css';
+@import './section/activeFriends.css';
+@import './section/channels.css';
+@import './section/register.css';
+@import './section/chat.css';
+@import './bg.css';
+@import './loading.css';
+@import './button.css';

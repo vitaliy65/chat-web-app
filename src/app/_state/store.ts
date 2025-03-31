@@ -4,11 +4,13 @@ import friendSlice from './friend/friendSlice';
 import filterFriendSlice from './filterFriend/filterFriendSlice';
 import friendRequestSlice from './friendRequest/friendRequestSlice';
 import userSlice from './user/userSlice';
+import chatSlice from './chat/chatSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     user: userSlice,
+    chat: chatSlice,
     friend: friendSlice,
     filterFriend: filterFriendSlice,
     friendRequest: friendRequestSlice,

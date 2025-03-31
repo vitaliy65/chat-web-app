@@ -47,7 +47,7 @@ export default function RegisterForm() {
       localStorage.setItem('user', JSON.stringify(localProps));
       await dispatch(fetchAuthenticationStatus());
 
-      window.location.href = '/';
+      window.location.href = '/channels/me';
     } catch (err) {
       console.log(err);
       setIsLoading(false);

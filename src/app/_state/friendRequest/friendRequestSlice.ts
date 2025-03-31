@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { APP_URL } from '@/utils/constants';
 
-type FriendRequest = {
+export type FriendRequest = {
+  senderId: string;
   senderName: string;
   requestId: string;
   status: 'pending' | 'accepted' | 'declined';

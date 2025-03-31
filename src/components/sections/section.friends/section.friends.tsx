@@ -1,3 +1,4 @@
+'use client';
 import SearchFriend from './searchFriend';
 import Friend from './friend';
 import { useAppSelector } from '@/app/_hooks/hooks';

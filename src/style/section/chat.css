@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+.upper_chat_container{
+    @apply flex justify-start items-center drop-shadow-sm border-b-1 border-b-neutral-800 w-full p-4 h-14 gap-4
+}
+
+.chat_container{
+    @apply flex flex-col w-full h-full overflow-y-scroll pt-1
+}
+
+.chat-item-container{
+    @apply flex flex-row items-center py-0.5
+}
+
+.message_container{
+    @apply flex h-fit w-full px-18
+}
+
+.message {
+    @apply w-full text-gray-300
+}
+
+.send_message_container{
+    @apply flex p-4 
+}
+
+.user-name{
+    @apply w-fit pr-2 text-white
+}
+
+.message-send-time{
+    @apply flex w-full text-sm items-end text-stone-400
+}
+
+.chat-image-container{
+    @apply flex absolute mx-5 rounded-full overflow-hidden
+}

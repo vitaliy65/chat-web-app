@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { FriendType } from '@/app/_state/friend/friendSlice';
@@ -5,6 +6,11 @@ import MoreActionButton from './button/button.moreAction';
 import { useAppDispatch } from '@/app/_hooks/hooks';
 import { deleteFriend } from '@/app/_state/friend/friendSlice';
 import { updateUserInfo } from '@/app/_state/user/userSlice';
+import {
+  deleteChat,
+  setCurrentChatByFriendId,
+} from '@/app/_state/chat/chatSlice';
+import { useRouter } from 'next/navigation';
 
 export default function FriendListItem({
   id,
@@ -18,8 +24,12 @@ export default function FriendListItem({
   const [position, setPosition] = useState<{ x: number; y: number } | null>(
     null
   );
+  const router = useRouter();
 
-  const sendMessage = () => {};
+  const handleOpenChat = async () => {
+    await dispatch(setCurrentChatByFriendId(id));
+    router.push(`/channels/me/${id}`);
+  };
 
   const moreActions = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { clientX, clientY } = e;
@@ -39,12 +49,13 @@ export default function FriendListItem({
 
   const handle_delete_and_close_MoreActionsForm = async () => {
     await dispatch(deleteFriend(id));
+    await dispatch(deleteChat(id));
     await dispatch(updateUserInfo());
     useShowMoreActions(false);
   };
 
   return (
-    <div className="list-item-upperline">
+    <div className="list-item-upperline" onClick={handleOpenChat}>
       <div className="friend-list-item-container cursor-pointer hover:bg-friend-list-background">
         <div className="row-center">
           <div className="friend_image_container">
@@ -76,7 +87,10 @@ export default function FriendListItem({
         </div>
         <div className="flex flex-row gap-3">
           {/* send message button */}
-          <button className="additional-buttons bg-friends-background hover:bg-channels-background">
+          <button
+            className="additional-buttons bg-friends-background hover:bg-channels-background"
+            onClick={handleOpenChat}
+          >
             <Image
               src={'/friend/email.png'}
               alt="send message"

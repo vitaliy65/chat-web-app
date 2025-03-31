@@ -1,5 +1,13 @@
-import React from 'react';
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Loading from '../loading';
 
-export default function Channel() {
-  return <div>Channel</div>;
+export default function Channels() {
+  const router = useRouter();
+  useEffect(() => {
+    router.push('/channels/me');
+  }, []);
+
+  return <Loading />;
 }

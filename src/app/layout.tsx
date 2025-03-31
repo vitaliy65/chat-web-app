@@ -1,16 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import '@/style/form/addFriendForm.css';
-import '@/style/section/login.css';
-import '@/style/section/friend.css';
-import '@/style/section/activeFriends.css';
-import '@/style/section/channels.css';
-import '@/style/section/register.css';
-import '@/style/bg.css';
-import '@/style/loading.css';
-import '@/style/button.css';
+import '@/style/index.css';
+
 import { Providers } from '@/components/provider/provider';
 import FetchUserInfo from '@/components/auth/fetchUserInfo';
+import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'Chat-web-app',
@@ -20,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">

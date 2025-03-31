@@ -4,15 +4,11 @@ import {
   fetchFriendRequests,
   acceptFriendRequest,
   denyFriendRequest,
+  FriendRequest,
 } from '@/app/_state/friendRequest/friendRequestSlice';
 import { updateUserInfo } from '@/app/_state/user/userSlice';
 import { fetchFriends } from '@/app/_state/friend/friendSlice';
-
-type FriendRequest = {
-  requestId: string;
-  senderName: string;
-  status: 'pending' | 'accepted' | 'declined';
-};
+import { createChat, fetchChats } from '@/app/_state/chat/chatSlice';
 
 export default function FetchFriendRequest() {
   const requests: FriendRequest[] = useAppSelector(
@@ -20,11 +16,15 @@ export default function FetchFriendRequest() {
   );
   const dispatch = useAppDispatch();
 
-  async function _acceptFriendRequest(friendRequestId: string) {
+  async function _acceptFriendRequest(
+    friendRequestId: string,
+    friendId: string
+  ) {
     try {
       await dispatch(acceptFriendRequest(friendRequestId));
       await dispatch(fetchFriendRequests());
       await dispatch(fetchFriends());
+      await dispatch(createChat(friendId));
       await dispatch(updateUserInfo());
     } catch {
       console.log('Error accepting friend request');
@@ -55,7 +55,10 @@ export default function FetchFriendRequest() {
                     <button
                       className="btn btn-primary"
                       onClick={() => {
-                        _acceptFriendRequest(request.requestId);
+                        _acceptFriendRequest(
+                          request.requestId,
+                          request.senderId
+                        );
                       }}
                     >
                       Принять

@@ -32,6 +32,7 @@ export async function GET(request: Request) {
       userFriendRequests.map(async (request) => {
         const sender = await User.findById(request.senderId);
         return {
+          senderId: request.senderId,
           senderName: sender?.username || 'Unknown',
           requestId: request._id,
           status: request.status,
