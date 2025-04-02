@@ -27,3 +27,5 @@ export const connectToMongoDB = async () => {
     throw error;
   }
 };
+
+export const mongoConnection = mongoose.connection;

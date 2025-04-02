@@ -15,14 +15,16 @@ export type ChatType = {
   messages: Message[];
 };
 
+export interface ICurrentChat {
+  id: string;
+  friendId: string;
+  participants: string[];
+  messages: Message[];
+}
+
 type FriendState = {
   chats: ChatType[];
-  currentChat: {
-    id: string;
-    friendId: string;
-    participants: string[];
-    messages: Message[];
-  };
+  currentChat: ICurrentChat;
 };
 
 const initialState: FriendState = {
@@ -67,6 +69,15 @@ const chatSlice = createSlice({
       const chat = state.chats.find((chat) => chat.id === chatId);
       if (chat) {
         chat.messages = messages;
+      }
+    });
+
+    // add message for chat
+    builder.addCase(sendMessageToChat.fulfilled, (state, action) => {
+      const { chatId, message } = action.payload;
+      const chat = state.chats.find((chat) => chat.id === chatId);
+      if (chat) {
+        chat.messages.push(message);
       }
     });
 
@@ -139,6 +150,40 @@ export const fetchMessagesByChatId = createAsyncThunk(
     } catch (error) {
       console.error(error);
       return rejectWithValue('Error fetching messages');
+    }
+  }
+);
+
+export const sendMessageToChat = createAsyncThunk(
+  'chat/sendMessageToChat',
+  async (
+    { chatId, content }: { chatId: string; content: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user') || '');
+      if (!storedUser) return rejectWithValue('User not authenticated');
+
+      const message: Message = await axios
+        .post(
+          `${APP_URL}/api/message/`,
+          { chatId, content },
+          {
+            headers: {
+              Authorization: `Bearer ${storedUser.token}`,
+            },
+          }
+        )
+        .then((res) => res.data)
+        .catch((err) => {
+          console.error(err);
+          return rejectWithValue('Failed to send message');
+        });
+
+      return { chatId, message };
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue('Error sending message');
     }
   }
 );

@@ -13,15 +13,15 @@
 }
 
 .message_container{
-    @apply flex h-fit w-full px-18
+    @apply flex h-fit w-1/2
 }
 
 .message {
-    @apply w-full text-gray-300
+    @apply p-1 px-3 rounded-md lg:rounded-xl xl:rounded-2xl  w-fit text-gray-300 
 }
 
 .send_message_container{
-    @apply flex p-4 
+    @apply flex justify-end items-center p-4
 }
 
 .user-name{
@@ -29,9 +29,13 @@
 }
 
 .message-send-time{
-    @apply flex w-full text-sm items-end text-stone-400
+    @apply flex text-sm items-end text-stone-400
 }
 
 .chat-image-container{
     @apply flex absolute mx-5 rounded-full overflow-hidden
+}
+
+.send-button{
+    @apply absolute h-8 w-8 rounded-full mr-2 mt-1 p-2 cursor-pointer
 }

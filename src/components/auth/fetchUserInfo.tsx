@@ -37,8 +37,6 @@ export default function FetchUserInfo({ children }: { children: ReactNode }) {
 
         const res = await dispatch(fetchAuthenticationStatus());
 
-        await console.log(chatsloaded);
-
         if (!res.payload.valid) {
           router.push('/auth/login');
         }
