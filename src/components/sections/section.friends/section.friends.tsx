@@ -9,7 +9,7 @@ export default function Friends() {
   const friends: FriendType[] = useAppSelector((state) => state.friend.friends);
 
   return (
-    <div className="overflow-hidden min-w-2xs">
+    <div className="flex flex-col min-w-2xs h-screen">
       <SearchFriend />
       <ul
         className="friend_section_container bg-friends-background"

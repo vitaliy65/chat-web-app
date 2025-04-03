@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 .upper_chat_container{
-    @apply flex justify-start items-center drop-shadow-sm border-b-1 border-b-neutral-800 w-full p-4 h-14 gap-4
+    @apply flex justify-start items-center drop-shadow-sm border-b-neutral-800 w-full p-4 h-14 gap-4
 }
 
-.chat_container{
-    @apply flex flex-col w-full h-full overflow-y-scroll pt-1
+.chat_container {
+    @apply flex flex-col w-full overflow-y-auto max-h-[calc(100vh-3.5rem-4rem)] pt-1 scroll-smooth;
 }
 
 .chat-item-container{
@@ -20,8 +20,12 @@
     @apply p-1 px-3 rounded-md lg:rounded-xl xl:rounded-2xl  w-fit text-gray-300 
 }
 
-.send_message_container{
-    @apply flex justify-end items-center p-4
+.send_message_container {
+    @apply flex justify-end items-center p-4 w-full h-16;
+}
+
+.send_message_input {
+    @apply  w-full px-4 py-2 border border-stone-600 focus:border-stone-500 focus:outline-none rounded-md shadow-sm
 }
 
 .user-name{
@@ -33,9 +37,9 @@
 }
 
 .chat-image-container{
-    @apply flex absolute mx-5 rounded-full overflow-hidden
+    @apply flex mx-5 rounded-full overflow-hidden
 }
 
 .send-button{
-    @apply absolute h-8 w-8 rounded-full mr-2 mt-1 p-2 cursor-pointer
+    @apply absolute h-8 w-8 rounded-full mr-2 p-2 cursor-pointer
 }

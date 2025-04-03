@@ -8,6 +8,7 @@ import {
   verifyUser,
 } from '@/middleware/api/middleware';
 import { generateToken } from '@/middleware/auth/middleware';
+import { socket } from '@/app/socket';
 
 export async function GET(request: Request) {
   try {

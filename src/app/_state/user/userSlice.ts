@@ -86,4 +86,52 @@ export const updateUserInfo = createAsyncThunk(
   }
 );
 
+export const updateOnlineStatus = createAsyncThunk(
+  'user/updateUserInfo',
+  async (status: boolean, { rejectWithValue }) => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+      const res = await axios.get(`${APP_URL}/api/user`, {
+        headers: {
+          Authorization: `Bearer ${storedUser.token}`,
+        },
+      });
+
+      await axios.patch(
+        `${APP_URL}/api/user`,
+        {
+          id: res.data.id,
+          onlineStatus: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${storedUser.token}`,
+          },
+        }
+      );
+
+      const localProps = {
+        user: {
+          id: res.data.id,
+          email: res.data.email,
+          username: res.data.username,
+          avatar: res.data.avatar,
+          friends: res.data.friends,
+          onlineStatus: status,
+          channels: res.data.channels,
+        },
+        token: storedUser.token,
+      };
+
+      // Сохраняем данные в localStorage
+      await localStorage.setItem('user', JSON.stringify(localProps));
+      return localProps;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      return rejectWithValue('Failed to update user info');
+    }
+  }
+);
+
 export default userSlice.reducer;

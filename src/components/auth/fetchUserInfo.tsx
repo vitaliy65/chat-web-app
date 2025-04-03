@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { fetchAuthenticationStatus } from '@/app/_state/auth/authSlice';
 import { useRouter } from 'next/navigation';
 import { fetchFriends } from '@/app/_state/friend/friendSlice';
-import { useAppDispatch, useAppSelector } from '@/app/_hooks/hooks';
+import { useAppDispatch } from '@/app/_hooks/hooks';
 import { fetchFriendRequests } from '@/app/_state/friendRequest/friendRequestSlice';
 import { updateUserInfo } from '@/app/_state/user/userSlice';
 import {
@@ -14,7 +14,6 @@ import {
 } from '@/app/_state/chat/chatSlice';
 
 export default function FetchUserInfo({ children }: { children: ReactNode }) {
-  const chatsloaded = useAppSelector((state) => state.chat.chats);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const dispatch = useAppDispatch();

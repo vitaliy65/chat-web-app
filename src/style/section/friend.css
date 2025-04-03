@@ -33,5 +33,5 @@
 
 /* friend section container */
 .friend_section_container{
-    @apply flex flex-col items-start h-full gap-3 py-4 px-4
+    @apply flex flex-col grow items-start overflow-y-auto gap-3 py-4 px-4 max-h-full;
 }

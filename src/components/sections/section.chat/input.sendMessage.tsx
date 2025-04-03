@@ -1,20 +1,30 @@
 'use client';
 
 import { useAppDispatch } from '@/app/_hooks/hooks';
-import { sendMessageToChat } from '@/app/_state/chat/chatSlice';
+import { Message, sendMessageToChat } from '@/app/_state/chat/chatSlice';
+import { socket } from '@/app/socket';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-export default function SendMessage({ chatId }: { chatId: string }) {
+export default function SendMessage({
+  friendId,
+  chatId,
+}: {
+  friendId: string;
+  chatId: string;
+}) {
   const dispatch = useAppDispatch();
   const [messageContent, setmessageContent] = useState<string>('');
 
   const sendMessage = async () => {
-    console.log({ chatId, messageContent });
-    if (messageContent !== '')
-      await dispatch(
+    if (messageContent !== '') {
+      const res = await dispatch(
         sendMessageToChat({ chatId: chatId, content: messageContent })
       );
+
+      const data = res.payload as { chatId: string; message: Message };
+      socket.volatile.emit('sendMessage', friendId, data.message);
+    }
     setmessageContent('');
   };
 
@@ -24,7 +34,7 @@ export default function SendMessage({ chatId }: { chatId: string }) {
         type="text"
         id="message"
         name="message"
-        className="mt-1 block w-full px-4 py-2 border border-stone-600 bg-friend-list-background focus:border-stone-500 focus:outline-none rounded-md shadow-sm "
+        className="send_message_input bg-friend-list-background"
         placeholder="написать"
         value={messageContent}
         onChange={(e) => setmessageContent(e.target.value)}

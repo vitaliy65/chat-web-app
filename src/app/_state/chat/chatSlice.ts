@@ -50,8 +50,20 @@ const chatSlice = createSlice({
           friendId: '',
           participants: [],
           messages: [],
-        }; // Reset if no chat is found
+        };
       }
+    },
+    addMessageToCurrentChat: (state, action: PayloadAction<Message>) => {
+      const newMessage = action.payload;
+
+      // Validate currentChat exists
+      if (!state.currentChat) return;
+
+      // Create new array with spread operator for immutability
+      state.currentChat.messages = [
+        ...(state.currentChat.messages || []),
+        newMessage,
+      ];
     },
   },
   extraReducers: (builder) => {
@@ -63,12 +75,24 @@ const chatSlice = createSlice({
       }
     );
 
+    builder.addCase(
+      fetchChatById.fulfilled,
+      (state, action: PayloadAction<ChatType>) => {
+        const chat: ChatType = action.payload;
+        if (!state.chats.includes(chat)) state.chats.push(chat);
+      }
+    );
+
     // fetch messages for chats
     builder.addCase(fetchMessagesByChatId.fulfilled, (state, action) => {
       const { chatId, messages } = action.payload;
       const chat = state.chats.find((chat) => chat.id === chatId);
       if (chat) {
         chat.messages = messages;
+      }
+
+      if (state.currentChat.id === chatId) {
+        state.currentChat.messages = messages;
       }
     });
 
@@ -78,6 +102,10 @@ const chatSlice = createSlice({
       const chat = state.chats.find((chat) => chat.id === chatId);
       if (chat) {
         chat.messages.push(message);
+      }
+
+      if (state.currentChat.id === chatId) {
+        state.currentChat.messages.push(message);
       }
     });
 
@@ -109,6 +137,34 @@ export const fetchChats = createAsyncThunk(
       // Fetch data for each chat
       const chatData: ChatType[] = await axios
         .get(`${APP_URL}/api/chat`, {
+          headers: {
+            Authorization: `Bearer ${storedUser.token}`,
+          },
+        })
+        .then((res) => res.data)
+        .catch((err) => {
+          console.error(err);
+          return [];
+        });
+
+      return chatData;
+    } catch (error) {
+      console.error(error); // Log the error for debugging
+      return rejectWithValue([]); // Return empty array on error
+    }
+  }
+);
+
+export const fetchChatById = createAsyncThunk(
+  'chat/fetchChatById',
+  async (chatId: string, { rejectWithValue }) => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user') || '');
+      if (!storedUser) return rejectWithValue([]); // Validate structure of storedUser
+
+      // Fetch data for each chat
+      const chatData: ChatType = await axios
+        .get(`${APP_URL}/api/chat/${chatId}`, {
           headers: {
             Authorization: `Bearer ${storedUser.token}`,
           },
@@ -252,5 +308,6 @@ export const createChat = createAsyncThunk(
   }
 );
 
-export const { setCurrentChatByFriendId } = chatSlice.actions;
+export const { setCurrentChatByFriendId, addMessageToCurrentChat } =
+  chatSlice.actions;
 export default chatSlice.reducer;

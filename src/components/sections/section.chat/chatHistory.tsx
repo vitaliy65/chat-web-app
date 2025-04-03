@@ -22,28 +22,28 @@ export default function ChatHistory({
           index > 0 && currentChat.messages[index - 1].sender === msg.sender;
 
         return (
-          <>
+          <li key={msg._id}>
             {!isSameSenderAsPrevious && (
-              <li
-                key={'header-' + msg._id}
+              <div
                 className={`chat-item-container ${friend.id === msg.sender ? 'justify-start' : 'justify-end'} `}
               >
-                <div key={'avatar-' + msg._id} className="chat-image-container">
-                  <Image
-                    src={
-                      friend.id === msg.sender
-                        ? friend.avatar
-                        : user.avatar || '/friend/user.png'
-                    }
-                    alt="friend image"
-                    width={128}
-                    height={128}
-                    className="h-8 w-8"
-                  />
-                </div>
+                {friend.id === msg.sender && (
+                  <div className="chat-image-container">
+                    <Image
+                      src={
+                        friend.id === msg.sender
+                          ? friend.avatar
+                          : user.avatar || '/friend/user.png'
+                      }
+                      alt="friend image"
+                      width={128}
+                      height={128}
+                      className="h-8 w-8"
+                    />
+                  </div>
+                )}
                 <div
-                  key={'user-info-' + msg._id}
-                  className={`message_container ${friend.id === msg.sender ? 'text-left justify-start pl-18' : 'text-right justify-end pr-18'}`}
+                  className={`message_container ${friend.id === msg.sender ? 'text-left justify-start ' : 'text-right justify-end'}`}
                 >
                   <span className={`user-name `}>
                     {friend.id === msg.sender ? friend.username : user.username}
@@ -54,10 +54,24 @@ export default function ChatHistory({
                     {`${new Date(msg.timestamp).toLocaleDateString()}, ${new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
                   </span>
                 </div>
-              </li>
+                {friend.id !== msg.sender && (
+                  <div className="chat-image-container">
+                    <Image
+                      src={
+                        friend.id === msg.sender
+                          ? friend.avatar
+                          : user.avatar || '/friend/user.png'
+                      }
+                      alt="friend image"
+                      width={128}
+                      height={128}
+                      className="h-8 w-8"
+                    />
+                  </div>
+                )}
+              </div>
             )}
-            <li
-              key={'message-' + msg._id}
+            <div
               className={`chat-item-container ${friend.id === msg.sender ? 'justify-start' : 'justify-end'}`}
             >
               <div
@@ -67,8 +81,8 @@ export default function ChatHistory({
                   {msg.content}
                 </span>
               </div>
-            </li>
-          </>
+            </div>
+          </li>
         );
       })}
     </ul>
