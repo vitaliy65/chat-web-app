@@ -3,7 +3,6 @@ import './globals.css';
 import '@/style/index.css';
 
 import { Providers } from '@/components/provider/provider';
-import FetchUserInfo from '@/components/auth/fetchUserInfo';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
