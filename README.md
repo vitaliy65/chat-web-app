@@ -17,20 +17,20 @@ A real-time chat application built with Next.js, Tailwind CSS, MongoDB (Mongoose
 ### Phase 2: Database & API
 
 - [x] Set up MongoDB connection with Mongoose
-- [ ] Define Mongoose schemas/models for users and messages
-- [ ] Create API routes for authentication, sending messages, and fetching chat history
+- [x] Define Mongoose schemas/models for users and messages
+- [x] Create API routes for authentication, sending messages, and fetching chat history
 
 ### Phase 3: Frontend Development
 
-- [ ] Design UI with Tailwind CSS
-- [ ] Implement chat interface with real-time message updates
-- [ ] Add authentication using NextAuth.js
+- [x] Design UI with Tailwind CSS
+- [x] Implement chat interface with real-time message updates
+- [x] Add authentication using NextAuth.js
 
 ### Phase 4: Real-time Messaging
 
-- [ ] Integrate WebSockets (Socket.io or Pusher)
-- [ ] Display live messages in the chat window
-- [ ] Show online/offline status of users
+- [x] Integrate WebSockets (Socket.io)
+- [x] Display live messages in the chat window
+- [x] Show online/offline status of users
 
 ### Phase 5: Additional Features
 
