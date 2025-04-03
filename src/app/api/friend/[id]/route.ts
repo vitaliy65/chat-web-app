@@ -8,11 +8,10 @@ import {
   verifyUser,
 } from '@/middleware/api/middleware';
 
-interface paramsProps {
-  params: { id: string };
-}
-
-export async function DELETE(request: Request, { params }: paramsProps) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const user = await verifyUser(request);
     const { id } = await params;

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import Channel from '@/models/Channel';
 import { connectToMongoDB } from '@/db/mongodb';
-import { verifyAdminRole } from '@/middleware/auth/middleware.ts';
+import { verifyAdminRole } from '@/middleware/auth/middleware';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const user = await verifyAdminRole(request);
     if (!user) return;

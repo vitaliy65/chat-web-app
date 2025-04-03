@@ -7,12 +7,11 @@ import {
   createResponse,
   handleError,
   verifyUser,
-  checkCurrentUser,
 } from '@/middleware/api/middleware';
 
 export async function POST(
   request: Request,
-  { params }: { params: { username: string } }
+  { params }: { params: Promise<{ username: string }> }
 ) {
   try {
     const currentUser = await verifyUser(request);

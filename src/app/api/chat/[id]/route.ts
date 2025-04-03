@@ -9,7 +9,7 @@ import {
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await verifyUser(request);
@@ -29,18 +29,24 @@ export async function DELETE(
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authUser = await verifyUser(request);
-    const { id } = await params;
-
+    const id = (await params).id;
     await connectToMongoDB();
 
-    // Найти чаты, где authUser.id есть в participants
-    const chat = await Chat.findOne({ participants: authUser.id, _id: id });
+    // Find chats where authUser.id is in participants and _id matches params.id
+    const chat = await Chat.findOne({
+      participants: authUser.id,
+      _id: id,
+    });
 
-    // Вернуть только нужные поля
+    if (!chat) {
+      throw new Error('Chat not found');
+    }
+
+    // Return only necessary fields
     const response = {
       id: chat._id,
       participants: chat.participants,

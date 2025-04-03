@@ -1,5 +1,4 @@
 import FriendRequest from '@/models/FriendRequest';
-import User from '@/models/User';
 import { connectToMongoDB } from '@/db/mongodb';
 import {
   STATUS_CODES,
@@ -9,11 +8,10 @@ import {
   verifyUser,
 } from '@/middleware/api/middleware';
 
-type deleteParams = {
-  params: { id: string };
-};
-
-export async function DELETE(request: Request, { params }: deleteParams) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const currentUser = await verifyUser(request);
     const { id } = await params;
