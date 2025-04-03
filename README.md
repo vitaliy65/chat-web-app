@@ -28,7 +28,7 @@ A real-time chat application built with Next.js, Tailwind CSS, MongoDB (Mongoose
 
 ### Phase 4: Real-time Messaging
 
-- [x] Integrate WebSockets (Socket.io or Pusher)
+- [x] Integrate WebSockets (Socket.io)
 - [x] Display live messages in the chat window
 - [x] Show online/offline status of users
 
