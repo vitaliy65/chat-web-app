@@ -20,9 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased font-sans`}>
         <div className="flex flex-row w-full h-screen">
-          <Providers>
-            <FetchUserInfo>{children}</FetchUserInfo>
-          </Providers>
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>
