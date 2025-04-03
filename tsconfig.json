@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -24,11 +23,13 @@
     }
   },
   "include": [
+    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/socket/server.js",
-    "server.js"
+    "src/models/Survey.ts",
+    "src/app/api/user/route.js",
+    "src/app/api/auth/route.ts"
   ],
   "exclude": ["node_modules"]
 }
