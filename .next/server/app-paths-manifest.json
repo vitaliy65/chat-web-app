@@ -1,0 +1,11 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/user/route": "app/api/user/route.js",
+  "/api/friend/route": "app/api/friend/route.js",
+  "/api/friendRequest/route": "app/api/friendRequest/route.js",
+  "/api/chat/route": "app/api/chat/route.js",
+  "/api/message/[id]/route": "app/api/message/[id]/route.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/page": "app/page.js",
+  "/channels/me/page": "app/channels/me/page.js"
+}
