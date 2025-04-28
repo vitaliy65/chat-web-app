@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -8,6 +9,14 @@ const nextConfig = {
         hostname: 'picsum.photos',
       },
     ],
+  },
+  webpack(config) {
+    config.resolve = config.resolve || {};
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@': path.resolve(__dirname, 'src'),
+    };
+    return config;
   },
 };
 
