@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       ...(config.resolve.alias || {}),
       '@': path.resolve(__dirname, 'src'),
     };
+    config.plugins.push(require('tailwindcss'), require('autoprefixer'));
     return config;
   },
 };
