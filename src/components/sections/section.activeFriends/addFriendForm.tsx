@@ -42,7 +42,7 @@ export default function AddFriendForm() {
   return (
     <div className="form-bg" onClick={closeForm}>
       <div
-        className="form-bg-color bg-main-background"
+        className="form-bg-color bg-main"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="justify-between flex items-center mb-4">

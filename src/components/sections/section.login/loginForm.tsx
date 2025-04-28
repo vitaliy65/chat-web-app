@@ -59,7 +59,7 @@ export default function LoginForm() {
       transition={{ duration: 0.5 }}
       className="login-container"
     >
-      <form className="login-form bg-main-background" onSubmit={handleSubmit}>
+      <form className="login-form bg-main" onSubmit={handleSubmit}>
         <h2 className="login-title">Войти</h2>
         <InputField
           label="Email"

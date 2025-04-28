@@ -16,7 +16,7 @@ export default function ChannelsIcon({ isActive, onClick }: ChannelsIconProps) {
       animate={{ borderRadius: isActive ? '12px' : '32px' }}
       whileHover={{ borderRadius: '12px' }}
       transition={{ duration: 0.3 }}
-      className="channel_button_img bg-friends-background"
+      className="channel_button_img bg-friends"
       onClick={onClick}
     >
       <Image

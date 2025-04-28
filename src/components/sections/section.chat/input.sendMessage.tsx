@@ -47,7 +47,7 @@ export default function SendMessage({
         required
       />
       <button
-        className="send-button bg-friends-background hover:bg-main-background"
+        className="send-button bg-friends hover:bg-main"
         onClick={sendMessage}
       >
         <Image src={'/channels/send.png'} alt="send" width={128} height={128} />

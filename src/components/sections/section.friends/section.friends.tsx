@@ -12,12 +12,12 @@ export default function Friends() {
     <div className="flex flex-col min-w-2xs h-screen">
       <SearchFriend />
       <ul
-        className="friend_section_container bg-friends-background"
+        className="friend_section_container bg-friends"
         aria-label="friends"
         role="list"
       >
         <FriendsHome />
-        <hr className="w-full text-friend-list-background"></hr>
+        <hr className="w-full text-friend_list_bg"></hr>
         {/* Render the list of friends */}
         {friends.map((friend) => (
           <Friend key={friend.id} {...friend} />

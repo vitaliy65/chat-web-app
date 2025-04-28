@@ -16,7 +16,7 @@ export default function Channels() {
 
   return (
     // generate channels that user are in
-    <div className="channel_section_container bg-channels-background">
+    <div className="channel_section_container bg-channels">
       <Home isActive={activeIndex === -1} onClick={() => handleIconClick(-1)} />
       {[...Array(6)].map((_, index) => (
         <ChannelsIcon

@@ -26,7 +26,7 @@ export default function FillterFriends() {
   };
 
   return (
-    <div className="filter_friend_container bg-main-background">
+    <div className="filter_friend_container bg-main">
       <span>Друзья</span>
       <div className="w-[1px] h-full bg-main-text"></div>
       <FilterButton

@@ -56,7 +56,7 @@ export default function FriendListItem({
 
   return (
     <div className="list-item-upperline" onClick={handleOpenChat}>
-      <div className="friend-list-item-container cursor-pointer hover:bg-friend-list-background">
+      <div className="friend-list-item-container cursor-pointer hover:bg-friend_list_bg">
         <div className="row-center">
           <div className="friend_image_container">
             <Image
@@ -80,7 +80,7 @@ export default function FriendListItem({
           </div>
           <div>
             <p>{username}</p>
-            <p className="online-status text-main-text">
+            <p className="online-status text-mainText">
               {onlineStatus ? 'в сети' : 'не в сети'}
             </p>
           </div>
@@ -88,7 +88,7 @@ export default function FriendListItem({
         <div className="flex flex-row gap-3">
           {/* send message button */}
           <button
-            className="additional-buttons bg-friends-background hover:bg-channels-background"
+            className="additional-buttons bg-friends hover:bg-channels"
             onClick={handleOpenChat}
           >
             <Image
@@ -102,7 +102,7 @@ export default function FriendListItem({
 
           {/* more actions button */}
           <button
-            className="additional-buttons bg-friends-background hover:bg-channels-background"
+            className="additional-buttons bg-friends hover:bg-channels"
             onClick={moreActions}
           >
             {showMoreActions && position ? (

@@ -1,8 +1,7 @@
-@import "tailwindcss";
 
 /* section containers */
 .filter_friend_container{
-    @apply flex justify-start items-center drop-shadow-sm border-b-1 border-b-neutral-800 w-full p-4 h-14 gap-6
+    @apply flex justify-start items-center drop-shadow-sm border-b border-b-neutral-800 w-full p-4 h-14 gap-6
 }
 
 .friend-list-item-container{
@@ -36,7 +35,7 @@
 
 /* friend list item additionals classes */
 .list-item-upperline{
-    @apply border-t-1 max-w-5xl border-solid border-[#3d3e41]
+    @apply border-t max-w-5xl border-solid border-[#3d3e41]
 }
 
 .online-status{

@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 .upper_chat_container{
     @apply flex justify-start items-center drop-shadow-sm border-b-neutral-800 w-full p-4 h-14 gap-4
 }

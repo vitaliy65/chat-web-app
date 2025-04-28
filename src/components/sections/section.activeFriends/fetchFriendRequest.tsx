@@ -49,7 +49,7 @@ export default function FetchFriendRequest() {
           .map((request) => (
             <div key={request.requestId} className="flex flex-col w-full">
               <div className="list-item-upperline">
-                <div className="friend-list-item-container border border-stone-600 mb-2 hover:bg-friend-list-background">
+                <div className="friend-list-item-container border border-stone-600 mb-2 hover:bg-friend_list_bg">
                   <p className="friend_username">@{request.senderName}</p>
                   <div className="flex">
                     <button

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import './form/addFriendForm.css';
 @import './section/login.css';
 @import './section/friend.css';

@@ -17,7 +17,7 @@ export default function Upper() {
   }, [friends, currentChat]);
 
   return (
-    <div className="upper_chat_container bg-main-background">
+    <div className="upper_chat_container bg-main">
       <div className="friend_image_container rounded-full overflow-hidden">
         <Image
           src={friend?.avatar || '/friend/user.png'}

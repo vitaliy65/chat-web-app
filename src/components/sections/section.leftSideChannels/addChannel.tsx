@@ -12,13 +12,13 @@ type ChannelsIconProps = {
 export default function AddChannel({ isActive, onClick }: ChannelsIconProps) {
   return (
     <>
-      <hr className="me_channel_underline text-friends-background" />
+      <hr className="me_channel_underline text-friends" />
       <motion.button
         initial={{ borderRadius: '32px' }}
         animate={{ borderRadius: isActive ? '12px' : '32px' }}
         whileHover={{ borderRadius: '12px' }}
         transition={{ duration: 0.3 }}
-        className="channel_button_img bg-friends-background"
+        className="channel_button_img bg-friends"
         onClick={onClick}
       >
         <Image

@@ -18,7 +18,7 @@ export default function ChannelsLayout({
         <Suspense fallback={<Loading />}>
           <Channels />
           <Friends />
-          <main className="flex flex-col h-screen w-full bg-main-background">
+          <main className="flex flex-col h-screen w-full bg-main">
             {children}
           </main>
         </Suspense>

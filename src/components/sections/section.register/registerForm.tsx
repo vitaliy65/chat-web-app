@@ -61,10 +61,7 @@ export default function RegisterForm() {
       transition={{ duration: 0.5 }}
       className="register-container"
     >
-      <form
-        className="register-form bg-main-background"
-        onSubmit={handleSubmit}
-      >
+      <form className="register-form bg-main" onSubmit={handleSubmit}>
         <h2 className="register-title">Регистрация</h2>
         <InputField
           label="Username"

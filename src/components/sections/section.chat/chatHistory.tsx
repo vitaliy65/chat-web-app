@@ -77,7 +77,7 @@ export default function ChatHistory({
               <div
                 className={`message_container ${friend.id === msg.sender ? 'justify-start pl-18' : 'justify-end pr-18'}`}
               >
-                <span className={`bg-friend-list-background message text-left`}>
+                <span className={`bg-friend_list_bg message text-left`}>
                   {msg.content}
                 </span>
               </div>

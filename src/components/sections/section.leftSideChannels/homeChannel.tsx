@@ -17,7 +17,7 @@ export default function Home({ isActive, onClick }: ChannelsIconProps) {
         animate={{ borderRadius: isActive ? '12px' : '32px' }}
         whileHover={{ borderRadius: '12px' }}
         transition={{ duration: 0.3 }}
-        className="channel_button_img bg-friends-background"
+        className="channel_button_img bg-friends"
         onClick={onClick}
       >
         <Image
@@ -30,7 +30,7 @@ export default function Home({ isActive, onClick }: ChannelsIconProps) {
         />
       </motion.button>
 
-      <hr className="me_channel_underline text-friends-background" />
+      <hr className="me_channel_underline text-friends" />
     </>
   );
 }

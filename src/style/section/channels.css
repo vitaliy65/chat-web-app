@@ -1,7 +1,6 @@
-@import "tailwindcss";
 
 .channel_section_container {
-    @apply flex flex-col items-center min-w-18 h-full gap-3 py-3 px-2
+    @apply flex flex-col items-center min-w-20 h-full gap-3 py-3 px-2
 }
 
 .channel_button_img{
@@ -9,5 +8,5 @@
 }
 
 .me_channel_underline{
-    @apply border-1 rounded-2xl w-full px-2
+    @apply border rounded-2xl w-full px-2
 }
