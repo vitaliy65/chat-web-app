@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { socket } from '@/app/socket';
-import ActiveFriends from '@/components/sections/section.activeFriends/section.activeFriends';
-import { useAppDispatch } from '@/app/_hooks/hooks';
-import { updateOnlineStatus } from '@/app/_state/user/userSlice';
+import { socket } from '../../socket';
+import ActiveFriends from '../../../components/sections/section.activeFriends/section.activeFriends';
+import { useAppDispatch } from '../../_hooks/hooks';
+import { updateOnlineStatus } from '../../_state/user/userSlice';
 
 export default function Default() {
   const dispatch = useAppDispatch();
