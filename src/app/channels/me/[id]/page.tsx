@@ -1,6 +1,6 @@
 'use client';
 
-import Chat from '@/components/sections/section.chat/section.chat';
+import Chat from '../../../../components/sections/section.chat/section.chat';
 import { useParams } from 'next/navigation';
 import React from 'react';
 
